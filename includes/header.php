@@ -8,21 +8,24 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
-	<title><?php echo SITE_NAME?></title>
+	<title><?php echo get_title($title)?></title>
 	<link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 <div class="container row">
 	<header class="header">
-		<h1 class="visually-hidden"><?php echo SITE_NAME?></h1>
+		<h1 class="visually-hidden"><?php echo get_title($title)?></h1>
 		<nav class="header__navigation">
 			<ul>
 				<li>
 					<a href="<?php echo getUrl()?>" class="header__link header__link_main"></a>
 				</li>
 				<li>
+					<?php if (!isset($_SESSION['user']) || empty($_SESSION['user'])) {?>
 					<button class="header__link header__link_profile_fill" title="Авторизоваться"></button>
-					<!--<a href="#" class="header__link header__link_exit" title="Выйти"></a>-->
+					<?php } else {?>
+					<a href="<?php echo getUrl('includes/sign_out.php')?>" class="header__link header__link_exit" title="Выйти"></a>
+					<?php }?>
 				</li>
 			</ul>
 		</nav>
@@ -31,7 +34,7 @@
 		<section class="wrapper">
 			<div class="main-header">
 				<a href="<?php echo getUrl()?>" class="header__link header__link_home" title="Лента"></a>
-				<a href="#" class="header__link header__link_profile" title="Твиты пользователя"></a>
+				<a href="<?php echo getUrl('user_posts.php')?>" class="header__link header__link_profile" title="Твиты пользователя"></a>
 				<a href="#" class="header__link header__link_likes" title="Понравившиеся твиты"></a>
 				<a href="#" class="header__link header__link_sort" title="Сортировать"></a>
 			</div>

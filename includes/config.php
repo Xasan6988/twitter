@@ -5,4 +5,6 @@
   const DB_NAME = 'twitter';
   const DB_USER = 'root';
   const DB_PASS = 'root';
+
+  session_start();
 ?>
