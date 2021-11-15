@@ -34,8 +34,10 @@
 		<section class="wrapper">
 			<div class="main-header">
 				<a href="<?php echo getUrl()?>" class="header__link header__link_home" title="Лента"></a>
+				<?php if (isset($_SESSION['user']) && !empty($_SESSION['user'])) {?>
 				<a href="<?php echo getUrl('user_posts.php')?>" class="header__link header__link_profile" title="Твиты пользователя"></a>
 				<a href="#" class="header__link header__link_likes" title="Понравившиеся твиты"></a>
+				<?php }?>
 				<a href="#" class="header__link header__link_sort" title="Сортировать"></a>
 			</div>
 		</section>

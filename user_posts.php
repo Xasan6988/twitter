@@ -18,6 +18,9 @@
   } else {
     $title = $_SESSION['user']['name'];
   }
+  if (isset($_SESSION['user']) && !empty($_SESSION['user'])) {
+    include_once('./includes/twitt_form.php');
+  }
 	include_once('./includes/header.php');
 	include_once('./includes/posts.php');
 	include_once('./includes/footer.php');

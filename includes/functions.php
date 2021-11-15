@@ -38,9 +38,9 @@
     return db()->query($sql);
   };
 
-  function get_posts($user_id = 0) {
+  function get_posts($user_id = 0, $sort = false) {
     if ($user_id > 0) return db_query("SELECT posts.*, users.name, users.login, users.avatar FROM `posts` JOIN `users` ON users.id = posts.user_id WHERE posts.user_id = $user_id;")->fetchAll();
-    return db_query("SELECT posts.*, users.name, users.login, users.avatar FROM `posts` JOIN `users` ON users.id = posts.user_id;")->fetchAll();
+    return db_query("SELECT posts.*, users.name, users.login, users.avatar FROM `posts` JOIN `users` ON users.id = posts.user_id ORDER BY posts.`date` DESC;")->fetchAll();
   }
 
   function get_user_info($login) {
@@ -132,4 +132,24 @@
     }
   }
 
+  function add_post($post_data) {
+    if (empty($post_data)) return false;
+    $user_id = $_SESSION['user']['id'];
+    $text = trim($post_data['text']);
+    $image = NULL;
+    if (mb_strlen($text) > 250) {
+      $text = mb_substr($text, 0, 250)." ...";
+    }
+    if (isset($post_data['image']) && !empty($post_data['image'])) {
+      $image = $post_data['image'];
+    }
+    return db_query("INSERT INTO `posts` (`id`, `user_id`, `text`, `image`, `date`) VALUES (NULL, '$user_id', '$text', '$image', CURRENT_TIMESTAMP);", true);
+  }
+
+
+  function delete_post($id) {
+    if (empty($id)) return false;
+    $user_id = $_SESSION['user']['id'];
+    return db_query("DELETE FROM `posts` WHERE `id`= $id AND `user_id` = '$user_id';", true);
+  }
 ?>
