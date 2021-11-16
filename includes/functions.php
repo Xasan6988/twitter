@@ -152,4 +152,28 @@
     $user_id = $_SESSION['user']['id'];
     return db_query("DELETE FROM `posts` WHERE `id`= $id AND `user_id` = '$user_id';", true);
   }
+
+  function get_likes_count($post_id) {
+    if (empty($post_id)) return false;
+
+    return db_query("SELECT * FROM `likes` WHERE `post_id` = '$post_id'")->fetchAll();
+  }
+
+  function user_is_like($post_id, $user_id) {
+    if (empty($post_id) || empty($user_id)) return false;
+
+    return db_query("SELECT * FROM `likes` WHERE `post_id` = '$post_id' AND `user_id` = '$user_id'")->fetchColumn();
+  }
+
+  function like_handler($post_id, $user_id) {
+    if (empty($post_id) || empty($user_id)) return false;
+
+    $is_like = !empty(user_is_like($post_id, $user_id));
+
+    if (!$is_like) {
+      return db_query("INSERT INTO `likes` (`user_id`, `post_id`) VALUES ('$user_id' , '$post_id');", true);
+    } else {
+      return db_query("DELETE FROM `likes` WHERE `user_id` = '$user_id' AND `post_id` = '$post_id'", true);
+    };
+  };
 ?>

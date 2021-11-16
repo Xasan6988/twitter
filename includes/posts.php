@@ -27,8 +27,7 @@
             </div>
           </div>
           <footer>
-            <button class="tweet__like">0</button>
-            <!-- tweet__like_active" -->
+            <a style="width: 15px; margin-rigth: 10px;" href="<?php echo getUrl("./includes/like_handler.php?postId=".$post['id']."&userId=".$_SESSION['user']['id'])?>" class="tweet__like some_class <?php if (!empty(user_is_like($post['id'], $_SESSION['user']['id']))) echo 'tweet__like_active'?>"><?php echo count(get_likes_count($post['id']));?></a>
           </footer>
         </article>
       </li>
